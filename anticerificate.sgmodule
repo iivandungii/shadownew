@@ -1,0 +1,29 @@
+#!name=Name Here
+#!desc=AnTiCert
+
+#!name=Anti Certificate
+
+[Rule]
+DOMAIN-SUFFIX,ocsp.apple.com,REJECT
+DOMAIN-SUFFIX,ocsp2.apple.com,REJECT
+DOMAIN-SUFFIX,valid.apple.com,REJECT
+DOMAIN-SUFFIX,crl.apple.com,REJECT
+DOMAIN-SUFFIX,certs.apple.com,REJECT
+AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
+AND,((DOMAIN-SUFFIX,youtube.com),(PROTOCOL,UDP)),REJECT
+AND,((DOMAIN-SUFFIX,googleapis.com),(PROTOCOL,UDP)),REJECT
+IP-CIDR,192.168.0.0/16,DIRECT
+IP-CIDR,10.0.0.0/8,DIRECT
+IP-CIDR,172.16.0.0/12,DIRECT
+IP-CIDR,127.0.0.0/8,DIRECT
+GEOIP,CN,DIRECT
+
+[Host]
+localhost = 127.0.0.1
+
+[URL Rewrite]
+^https?://(www.)?g.cn https://www.google.com 302
+^https?://(www.)?google.cn https://www.google.com 302
+
+[MITM]
+hostname = ocsp.apple.com, ocsp2.apple.com, valid.apple.com, crl.apple.com, certs.apple.com
